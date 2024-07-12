@@ -1,5 +1,6 @@
 from User import  User
 
+import random
 
 class TeacherUserType(User):
     def __init__(self, first_name, last_name, username, email, password):
@@ -12,3 +13,9 @@ class TeacherUserType(User):
             'add_book': False,
             'remove_book': False
         }
+
+    def generate_id(self):
+        prefix = "Professor_"
+        random_suffix = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=8))
+        self.id = prefix + random_suffix
+        return self.id

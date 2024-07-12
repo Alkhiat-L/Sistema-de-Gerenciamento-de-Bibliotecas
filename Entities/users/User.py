@@ -1,4 +1,3 @@
-import random
 class User:
     def __init__(self, first_name, last_name, username, email, password):
         self.first_name = first_name
@@ -6,6 +5,8 @@ class User:
         self.username = username
         self.email = email
         self.password = password
+        self.id = self.generate_id()
+        self.books = []
         self.permissions = {
             'borrow': 1,
             'return': True,
@@ -14,3 +15,6 @@ class User:
             'add_book': False,
             'remove_book': False
         }
+
+    def generate_id(self):
+        return None
