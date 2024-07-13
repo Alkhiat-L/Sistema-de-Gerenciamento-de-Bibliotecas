@@ -3,7 +3,7 @@ from users.User import User
 
 class BookAvailabilityNotifier:
     def __init__(self):
-        self.observers: [User] = []
+        self.observers: list[User] = []
 
     def add_observer(self, observer: User):
         self.observers.append(observer)

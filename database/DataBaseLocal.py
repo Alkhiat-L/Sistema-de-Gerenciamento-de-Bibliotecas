@@ -1,8 +1,8 @@
-from Entities.Book import Book
-from Entities.BookCategory import BookCategory
-from Entities.Borrowing import Borrowing
-from Entities.users.User import User
-from Entities import BookAvailabilityNotifier
+from entities.Book import Book
+from entities.BookCategory import BookCategory
+from entities.Borrowing import Borrowing
+from entities.users.User import User
+from entities import BookAvailabilityNotifier
 
 
 class DataBaseLocal(BookAvailabilityNotifier):
@@ -10,6 +10,7 @@ class DataBaseLocal(BookAvailabilityNotifier):
         self.books = []
         self.book_categories = []
         self.borrowings = []
+        self.maxDaysBorrowed = 7      #days
 
     def add_book(self, book: Book):
         self.books.append(book)
@@ -36,6 +37,25 @@ class DataBaseLocal(BookAvailabilityNotifier):
             self.borrowings.remove(borrowing)
         self.notify('book_returned', borrowing.book)
 
+    def get_max_days_borrowed(self):
+        return self.maxDaysBorrowed
+    
+    def get_max_days_borrowed(self, new_time: int):
+        self.maxDaysBorrowed = new_time
+
+    def get_book_by_title(self, title: str) -> Book:
+        for book in self.books:
+            if book.title == title:
+                return book
+        return None
+    
+    def get_book_by_author(self, author: str) -> list:
+        books_from_author = []
+        for book in self.books:
+            if book.author == author:
+                books_from_author.append(book)
+        return books_from_author
+
     def get_book_by_id(self, book_id: int) -> Book:
         for book in self.books:
             if book.id == book_id:
@@ -48,6 +68,13 @@ class DataBaseLocal(BookAvailabilityNotifier):
             if book.category == category_name:
                 books_in_category.append(book)
         return books_in_category
+    
+    def get_books_avaiable(self) -> list:
+        books_avaiable = []
+        for book in self.books:
+            if book.available == True:
+                books_avaiable.append(book)
+        return books_avaiable
 
     def get_borrowings_by_user(self, user: User) -> list:
         user_borrowings = []

@@ -1,4 +1,5 @@
-from Entities.Book import Book
+from entities import Book
+
 
 class BookCategory:
     def __init__(self, name, parent=None):

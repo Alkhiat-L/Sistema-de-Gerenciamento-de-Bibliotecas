@@ -1,7 +1,8 @@
 import datetime
 
-from DataBase.DataBaseLocal import DataBaseLocal
-from Entities.Borrowing import Borrowing
+from database.DataBaseLocal import DataBaseLocal
+from entities.Borrowing import Borrowing
+from handlers import HandlerSetup
 
 class LibraryMediator:
     def __init__(self, database: DataBaseLocal):
@@ -36,18 +37,22 @@ class LibraryMediator:
     def book_borrow(self, user, book_id, days_borrowed):
         if not user.permissions['borrow']:
             raise Exception("Permission denied")
-        if user.permissions['borrow'] <= len(user.books):
-            raise Exception("Borrow limit exceeded")
+
+        handler_setup = HandlerSetup(self.database)
+        handler_chain = handler_setup.setup_chain()
+
+        request = {'user': user.id, 'book': book_id, 'days_borrowed': days_borrowed}
+        result = handler_chain.handle(request)
         
-        book = self.database.get_book_by_id(book_id)
-        if book and book.available:
+        if result:
+            book = self.database.get_book_by_id(book_id)
             book.available = False
             book.return_date = datetime.datetime.now() + datetime.timedelta(days=days_borrowed)
             borrowing = Borrowing(user, book, datetime.datetime.now(), book.return_date)
             self.database.add_borrowing(borrowing)
             return book
-        
-        raise Exception("Book not available")
+        else:
+            raise Exception("Loan approval failed")
 
     def book_return(self, user, book_id):
         if not user.permissions['return']:
