@@ -1,18 +1,12 @@
-from User import  User
-
+from User import User
+from config.ConfigurationManager import ConfigurationManager
 import random
+
 
 class TeacherUserType(User):
     def __init__(self, first_name, last_name, username, email, password):
         super().__init__(first_name, last_name, username, email, password)
-        self.permissions = {
-            'borrow': 5,
-            'return': True,
-            'book_search': True,
-            'user_search': 1,
-            'add_book': False,
-            'remove_book': False
-        }
+        self.permissions = self.permissions = ConfigurationManager().get_user_permissions('teacher')
 
     def generate_id(self):
         prefix = "Professor_"

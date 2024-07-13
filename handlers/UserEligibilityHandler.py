@@ -1,0 +1,2 @@
+class UserEligibilityHandler:
+    pass

@@ -2,8 +2,10 @@ from Entities.Book import Book
 from Entities.BookCategory import BookCategory
 from Entities.Borrowing import Borrowing
 from Entities.users.User import User
+from Entities import BookAvailabilityNotifier
 
-class DataBaseLocal:
+
+class DataBaseLocal(BookAvailabilityNotifier):
     def __init__(self):
         self.books = []
         self.book_categories = []
@@ -11,10 +13,12 @@ class DataBaseLocal:
 
     def add_book(self, book: Book):
         self.books.append(book)
+        self.notify('book_added', book)
 
     def remove_book(self, book: Book):
         if book in self.books:
             self.books.remove(book)
+        self.notify('book_removed', book)
 
     def add_book_category(self, book_category: BookCategory):
         self.book_categories.append(book_category)
@@ -25,10 +29,12 @@ class DataBaseLocal:
 
     def add_borrowing(self, borrowing: Borrowing):
         self.borrowings.append(borrowing)
+        self.notify('book_borrowed', borrowing.book)
 
     def remove_borrowing(self, borrowing: Borrowing):
         if borrowing in self.borrowings:
             self.borrowings.remove(borrowing)
+        self.notify('book_returned', borrowing.book)
 
     def get_book_by_id(self, book_id: int) -> Book:
         for book in self.books:
