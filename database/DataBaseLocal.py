@@ -19,7 +19,7 @@ class DataBaseLocal(BookAvailabilityNotifier):
     def remove_book(self, book: Book):
         if book in self.books:
             self.books.remove(book)
-        self.notify('book_removed', book)
+            self.notify('book_removed', book)
 
     def add_book_category(self, book_category: BookCategory):
         self.book_categories.append(book_category)
@@ -35,7 +35,7 @@ class DataBaseLocal(BookAvailabilityNotifier):
     def remove_borrowing(self, borrowing: Borrowing):
         if borrowing in self.borrowings:
             self.borrowings.remove(borrowing)
-        self.notify('book_returned', borrowing.book)
+            self.notify('book_returned', borrowing.book)
 
     def get_max_days_borrowed(self):
         return self.maxDaysBorrowed

@@ -25,18 +25,16 @@ class User:
             self.observers['book_returned'] = returned
 
     def update(self, notify_type, book):
-        if notify_type == 'book_added' and self.observers['book_added']:
-            pass
-            #sendmessage(user.email, 'The book ' + book.tittle + ' was added to the library')
-        if notify_type == 'book_removed' and self.observers['book_removed']:
-            pass
-            #sendmessage(user.email, 'The book ' + book.tittle + ' was removed from the library')
-        if notify_type == 'book_borrowed' and self.observers['book_borrowed']:
-            pass
-            #sendmessage(user.email, 'The book ' + book.tittle + ' was borrowed')
-        if notify_type == 'book_returned' and self.observers['book_returned']:
-            pass
-            #sendmessage(user.email, 'The book ' + book.tittle + ' was returned to the library')
+        if notify_type == 'book_added' and self.observers.get('book_added'):
+            self.send_notification('The book ' + book.title + ' was added to the library')
+        if notify_type == 'book_removed' and self.observers.get('book_removed'):
+            self.send_notification('The book ' + book.title + ' was removed from the library')
+        if notify_type == 'book_borrowed' and self.observers.get('book_borrowed'):
+            self.send_notification('The book ' + book.title + ' was borrowed')
+        if notify_type == 'book_returned' and self.observers.get('book_returned'):
+            self.send_notification('The book ' + book.title + ' was returned to the library')
 
-    def generate_id(self):
-        return None
+    def send_notification(self, message):
+        #notification = generate_id()
+        #send_notification_email(notification)
+        print(f"Notification to {self.email}: {message}")
