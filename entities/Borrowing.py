@@ -1,6 +1,6 @@
 import datetime
-from Book import Book
-from users.User import User
+from entities.Book import Book
+from entities.users.User import User
 
 class Borrowing:
     def __init__(self, user: User, book: Book, borrow_date: datetime.datetime, return_date: datetime.datetime):

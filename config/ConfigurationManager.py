@@ -1,8 +1,14 @@
 class ConfigurationManager:
     def __init__(self):
         self.borrow_config = {
+            'librarian': False,
+            'user': True,
+            'student': True,
+            'teacher': True
+        }
+        self.borrow_limit = {
             'librarian': 0,
-            'user': 1,
+            'user': 0,
             'student': 3,
             'teacher': 5
         }
@@ -36,6 +42,12 @@ class ConfigurationManager:
             'student': False,
             'teacher': False
         }
+        self.register_user_config = {
+            'librarian': True,
+            'user': False,
+            'student': False,
+            'teacher': False
+        }
         self.default_users_observers = {
             'book_added': True,
             'book_removed': True,
@@ -53,5 +65,7 @@ class ConfigurationManager:
             'book_search': self.book_search_config[user_type],
             'user_search': self.user_search_config[user_type],
             'add_book': self.add_book_config[user_type],
-            'remove_book': self.remove_book_config[user_type]
+            'remove_book': self.remove_book_config[user_type],
+            'register_user': self.register_user_config[user_type],
+            'borrow_limit': self.borrow_limit[user_type]
         }

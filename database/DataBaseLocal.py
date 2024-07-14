@@ -2,15 +2,17 @@ from entities.Book import Book
 from entities.BookCategory import BookCategory
 from entities.Borrowing import Borrowing
 from entities.users.User import User
-from entities import BookAvailabilityNotifier
+from entities.BookAvailabilityNotifier import BookAvailabilityNotifier
 
 
 class DataBaseLocal(BookAvailabilityNotifier):
     def __init__(self):
+        super().__init__()
         self.books = []
         self.book_categories = []
         self.borrowings = []
         self.maxDaysBorrowed = 7      #days
+        self.users = []
 
     def add_book(self, book: Book):
         self.books.append(book)
@@ -20,6 +22,9 @@ class DataBaseLocal(BookAvailabilityNotifier):
         if book in self.books:
             self.books.remove(book)
             self.notify('book_removed', book)
+
+    def add_user(self, user: User):
+        self.users.append(user)
 
     def add_book_category(self, book_category: BookCategory):
         self.book_categories.append(book_category)
@@ -40,7 +45,7 @@ class DataBaseLocal(BookAvailabilityNotifier):
     def get_max_days_borrowed(self):
         return self.maxDaysBorrowed
     
-    def get_max_days_borrowed(self, new_time: int):
+    def set_max_days_borrowed(self, new_time: int):
         self.maxDaysBorrowed = new_time
 
     def get_book_by_title(self, title: str) -> Book:
@@ -69,12 +74,12 @@ class DataBaseLocal(BookAvailabilityNotifier):
                 books_in_category.append(book)
         return books_in_category
     
-    def get_books_avaiable(self) -> list:
-        books_avaiable = []
+    def get_books_available(self) -> list:
+        books_available = []
         for book in self.books:
-            if book.available == True:
-                books_avaiable.append(book)
-        return books_avaiable
+            if book.available:
+                books_available.append(book)
+        return books_available
 
     def get_borrowings_by_user(self, user: User) -> list:
         user_borrowings = []
@@ -82,3 +87,9 @@ class DataBaseLocal(BookAvailabilityNotifier):
             if borrowing.user == user:
                 user_borrowings.append(borrowing)
         return user_borrowings
+
+    def get_user_by_id(self, user_id) -> User:
+        for u in self.users:
+            if u.id == user_id:
+                return u
+        raise Exception('User id Error')

@@ -55,7 +55,7 @@ class ExternalCatalogAdapter(ExternalCatalog):
         return books
 
     def search_available_books(self):
-        return self.library_facade.library.database.get_books_avaiable()
+        return self.library_facade.library.database.get_books_available()
 
     def search_book_by_id(self, book_id):
         book = self.library_facade.library.database.get_book_by_id(book_id)

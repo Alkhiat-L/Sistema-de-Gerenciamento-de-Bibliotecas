@@ -1,4 +1,3 @@
-from entities.BookAvailabilityNotifier import BookAvailabilityNotifier
 from config.ConfigurationManager import ConfigurationManager
 
 

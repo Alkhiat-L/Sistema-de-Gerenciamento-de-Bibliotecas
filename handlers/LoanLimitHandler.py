@@ -1,5 +1,5 @@
-from handlers import Handler
-from entities.users.User import User
+from handlers.Handler import Handler
+
 
 class LoanLimitHandler(Handler):
     def __init__(self, database, next_handler=None):
@@ -8,7 +8,8 @@ class LoanLimitHandler(Handler):
 
     def handle(self, request):
         user = request.get('user')
-        loan_limit = user.permissions['borrow']
+        user = self.database.get_user_by_id(user)
+        loan_limit = user.permissions['borrow_limit']
         if len(self.database.get_borrowings_by_user(user.id)) < loan_limit:
             return super().handle(request)
         else:

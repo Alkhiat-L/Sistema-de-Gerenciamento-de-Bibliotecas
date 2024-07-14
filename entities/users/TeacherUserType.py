@@ -1,4 +1,4 @@
-from User import User
+from entities.users.User import User
 from config.ConfigurationManager import ConfigurationManager
 import random
 

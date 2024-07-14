@@ -1,4 +1,4 @@
-from Handler import Handler
+from handlers.Handler import Handler
 
 class BorrowedTimeHandler(Handler):
     def __init__(self, database, next_handler=None):

@@ -1,4 +1,4 @@
-from handlers import Handler
+from handlers.Handler import Handler
 
 class BookAvailabilityHandler(Handler):
     def __init__(self, database, next_handler=None):

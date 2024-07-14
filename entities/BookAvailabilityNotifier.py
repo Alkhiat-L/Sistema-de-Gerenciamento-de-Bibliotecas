@@ -1,4 +1,4 @@
-from users.User import User
+from entities.users.User import User
 
 
 class BookAvailabilityNotifier:

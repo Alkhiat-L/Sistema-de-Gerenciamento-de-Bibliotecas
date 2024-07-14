@@ -1,5 +1,8 @@
 from database.DataBaseLocal import DataBaseLocal
-from handlers import BookAvailabilityHandler, BorrowedTimeHandler, LoanLimitHandler
+from handlers.BookAvailabilityHandler import BookAvailabilityHandler
+from handlers.BorrowedTimeHandler import BorrowedTimeHandler
+from handlers.LoanLimitHandler import LoanLimitHandler
+
 
 class HandlerSetup:
     def __init__(self, database):
