@@ -4,6 +4,10 @@ class BorrowedTimeHandler(Handler):
     def __init__(self, database, next_handler=None):
         super().__init__(next_handler)
         self.database = database
+        self.last = False
+
+    def set_last(self, last):
+        self.last = last
 
     def handle(self, request):
         days_borrowed = request.get('days_borrowed')

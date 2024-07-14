@@ -1,7 +1,7 @@
 from database.DataBaseLocal import DataBaseLocal
 from handlers.BookAvailabilityHandler import BookAvailabilityHandler
 from handlers.BorrowedTimeHandler import BorrowedTimeHandler
-from handlers.LoanLimitHandler import LoanLimitHandler
+from handlers.BorrowLimitHandler import BorrowLimitHandler
 
 
 class HandlerSetup:
@@ -12,11 +12,12 @@ class HandlerSetup:
     def setup_chain(self):
         book_availability_handler = BookAvailabilityHandler(self.database)
         borrowed_time_handler = BorrowedTimeHandler(self.database)
-        loan_limit_handler = LoanLimitHandler(self.database)
+        borrow_limit_handler = BorrowLimitHandler(self.database)
 
         # Set up the chain
+        borrow_limit_handler.set_last(True)
         book_availability_handler.set_next(borrowed_time_handler)
-        borrowed_time_handler.set_next(loan_limit_handler)
+        borrowed_time_handler.set_next(borrow_limit_handler)
 
         # Set the head of the chain
         self.head = book_availability_handler

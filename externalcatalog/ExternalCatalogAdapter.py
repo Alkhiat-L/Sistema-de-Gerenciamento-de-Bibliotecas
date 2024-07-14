@@ -1,10 +1,10 @@
 import datetime
 
 from externalcatalog import ExternalCatalog
-from library.LibraryFacade import LibraryFacade  # Import LibraryFacade instead of LibraryMediator
+from library.Library import Library  # Import LibraryFacade instead of LibraryMediator
 
 class ExternalCatalogAdapter(ExternalCatalog):
-    def __init__(self, library_facade: LibraryFacade):
+    def __init__(self, library_facade: Library):
         self.library_facade = library_facade
 
     def search_books(self, mode, key):

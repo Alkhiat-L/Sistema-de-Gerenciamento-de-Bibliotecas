@@ -1,7 +1,7 @@
 from library.LibraryMediator import LibraryMediator
 from entities.users.User import User
 
-class LibraryFacade:    #LibraryFacade
+class Library:    #LibraryFacade
     def __init__(self, db):
         self.library = LibraryMediator(db)
 

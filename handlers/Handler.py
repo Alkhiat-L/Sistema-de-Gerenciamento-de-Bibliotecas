@@ -11,4 +11,7 @@ class Handler(ABC):
     def handle(self, request):
         if self.next_handler:
             return self.next_handler.handle(request)
-        return False
+        if self.last == True:
+            return True
+        else:
+            return False

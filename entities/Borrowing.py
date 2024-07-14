@@ -1,9 +1,12 @@
 import datetime
+import random
+
 from entities.Book import Book
 from entities.users.User import User
 
 class Borrowing:
     def __init__(self, user: User, book: Book, borrow_date: datetime.datetime, return_date: datetime.datetime):
+        self.id = self.generate_id()
         self.user = user
         self.book = book
         self.borrow_date = borrow_date
@@ -20,3 +23,8 @@ class Borrowing:
             self.status = 2
         
         self.book_returned_date = book_returned_date
+
+    def generate_id(self):
+        prefix = "Borrow_"
+        random_suffix = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=8))
+        self.id = prefix + random_suffix

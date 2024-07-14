@@ -21,6 +21,7 @@ class LibraryMediator:
         if not user:
             raise Exception("User with this username does not exist")
         return user
+    
     def book_search(self, username, password, mode, key):
         user = self.get_user(username, password)
         if not user.permissions['book_search']:
@@ -56,7 +57,7 @@ class LibraryMediator:
         handler_setup = HandlerSetup(self.database)
         handler_chain = handler_setup.setup_chain()
 
-        request = {'user': user.id, 'book': book_id, 'days_borrowed': days_borrowed}
+        request = {'user': user, 'book': book_id, 'days_borrowed': days_borrowed}
         result = handler_chain.handle(request)
 
         if result:
@@ -67,7 +68,7 @@ class LibraryMediator:
             self.database.add_borrowing(borrowing)
             return book
         else:
-            raise Exception("Loan approval failed")
+            raise Exception("Borrow approval failed")
 
     def book_return(self, username, password, book_id):
         user = self.get_user(username, password)
